@@ -7,8 +7,6 @@ import tempfile
 from Auto_Attribute import process_extreme_attributes
 from FormatReportProduction import format_excel_file, format_JSON_data
 
-
-
 # Initialize Flask app
 app = Flask(__name__)
 
@@ -177,8 +175,16 @@ def format_data():
     except Exception as e:
         return jsonify({"error": f"Something went wrong: {str(e)}"}), 500
 
+from werkzeug.middleware.dispatcher import DispatcherMiddleware
+from werkzeug.wrappers import Response
+
 if __name__ == '__main__':
     """
     Run the Flask application in debug mode.
     """
     app.run(debug=True)
+
+app.wsgi_app = DispatcherMiddleware(
+    Response('Not Found', status=404),
+    {'/jaredapi' : app.wsgi_app}
+)
