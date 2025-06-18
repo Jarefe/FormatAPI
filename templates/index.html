@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Testing Report Formatting Tool</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2rem;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+        }
+        .section {
+            background-color: white;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        input[type="file"] {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .form-container {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        .form-box {
+            flex: 1;
+            min-width: 300px;
+        }
+        .form-description {
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<h1>📁 Testing Report Formatting Tool</h1>
+
+<div class="section">
+    <p>Upload an Excel file. It will automatically be formatted and downloaded.</p>
+
+    <div class="form-container">
+        <div class="form-box">
+            <p class="form-description">
+                <strong>Standard Format:</strong> Accepts All-Time Inventory reports and produces a formatted testing report.
+            </p>
+            <form method="POST" action="/format-excel" enctype="multipart/form-data">
+                <input type="file" name="file" required>
+                <button type="submit">Standard Format</button>
+            </form>
+        </div>
+
+        <div class="form-box">
+            <p class="form-description">
+                <strong>Extreme Format:</strong> Accepts full Extreme reports with attributes and formats a testing report using EPS data.
+            </p>
+            <form method="POST" action="/format-extreme" enctype="multipart/form-data">
+                <input type="file" name="file" required>
+                <button type="submit">Extreme Format</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
