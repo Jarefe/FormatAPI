@@ -203,7 +203,7 @@ def process_extreme_desktops(df: pd.DataFrame):
 
 def process_extreme_attributes(workbook):
     try:
-        raw_dataframe = pd.read_excel(workbook)
+        raw_dataframe = pd.read_excel(workbook, engine='openpyxl')
 
         device_type = raw_dataframe['Category'].iloc[0]
 
