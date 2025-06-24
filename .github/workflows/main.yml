@@ -1,0 +1,42 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.7.0
+      with:
+        ssh-private-key: ${{ secrets.HASOFTWARE_PKEY }}
+
+    - name: Deploy and Restart Gunicorn
+      run: |
+        ssh -o StrictHostKeyChecking=no hasoftware@12.21.25.155 << 'EOF'
+          echo "📁 Entrando al proyecto"
+          cd /home/hasoftware/FormatAPI
+
+          echo "🔄 Reseteando y actualizando código"
+          git reset --hard HEAD
+          git pull origin main
+
+          echo "🧪 Activando entorno virtual"
+          source myenv/bin/activate
+
+          echo "🛑 Matando procesos gunicorn anteriores"
+          pkill gunicorn || true
+
+          echo "🚀 Lanzando nueva instancia de Gunicorn"
+          export FLASK_APP=app.py
+          gunicorn -w 4 -b 0.0.0.0:8005 app:app --daemon
+
+          echo "✅ Deploy finalizado correctamente"
+        EOF
