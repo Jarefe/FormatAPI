@@ -2,6 +2,7 @@ import io
 import uuid
 import requests
 from flask import Flask, render_template, request, jsonify, send_file
+from flask_cors import CORS
 import tempfile
 
 from Auto_Attribute import process_extreme_attributes
@@ -9,6 +10,7 @@ from FormatReportProduction import format_excel_file, format_JSON_data
 
 # Initialize Flask app
 app = Flask(__name__)
+CORS(app) # Enables CORS for all routes and origins
 
 # Endpoint
 URL = 'https://api.smartimageserve.com/upload'
@@ -136,7 +138,7 @@ def fetch_data():
 @app.route('/')
 def home():
     """
-    Serve the homepage of the app, which provides links to pricing, Excel formatting, and eBay tracking.
+    Serve the homepage of the app, which provides links to Excel formatting
 
     :return: Rendered homepage template (HTML).
     """
